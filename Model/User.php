@@ -2,15 +2,15 @@
 class User{
     private $id;
 
-    private $email;
+    private $userName;
 
     private $password;
 
 
-    public function __construct($id, $email, $password)
+    public function __construct($id, $userName, $password)
     {
         $this->id = $id;
-        $this->email = $email;
+        $this->userName = $userName;
         $this->password = $password;
     }
 
@@ -26,15 +26,14 @@ class User{
         $this->id = $id;
     }
 
-    public function getEmail()
+    public function getUserName()
     {
-        return $this->email;
+        return $this->userName;
     }
 
-
-    public function setEmail($email): void
+    public function setUserName($userName): void
     {
-        $this->email = $email;
+        $this->userName = $userName;
     }
 
 

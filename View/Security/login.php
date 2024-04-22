@@ -13,28 +13,29 @@ require 'View/function.php';
     <title>Register</title>
 </head>
 <body>
-<?php
-        //TODO Rajout du headaer
-?>
+
+
+<section class="container">
 <h1>Se connecter</h1>
 
 <form method="post">
 
     <div class="form-group">
-        <label for="">Email</label>
-        <input type="text" name="email" class="form-control">
+        <label for="">Username</label>
+        <input type="text" name="username" class="form-control">
     </div>
     <div class="form-group">
         <label for="">Mot de passe</label>
         <input type="password" name="password">
     </div>
 
+    <a class="" href="index.php?controller=security&action=register">Créer un compte</a>
     <?php
 
     ?>
     <button type="submit">Connecter</button>
 
 </form>
-
+</section>
 </body>
 </html>

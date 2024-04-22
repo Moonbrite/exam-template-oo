@@ -4,24 +4,25 @@ class UserManager extends DbManager
 {
 
     public function add(User $user){
-        $query = $this->bdd->prepare("INSERT INTO users (email,password) VALUES(:email,:password)");
-        $query->execute(['email'=>$user->getEmail(),
+        $query = $this->bdd->prepare("INSERT INTO users (username,password) VALUES(:username,:password)");
+        $query->execute([
+            'username'=>$user->getUserName(),
             'password'=>$user->getPassword()]);
     }
 
-    public function findByEmail(){
+    public function findByUser(){
 
         $user =null;
 
-        $query = $this->bdd->prepare("SELECT * FROM users WHERE email = :email");
+        $query = $this->bdd->prepare("SELECT * FROM users WHERE username = :username");
 
         $query->execute([
-            "email"=>$_POST["email"]
+            "username"=>$_POST["username"]
         ]);
         $result = $query->fetch();
 
         if ($result){
-            $user = new User($result["id"],$result["email"],$result["password"]);
+            $user = new User($result["id"],$result["username"],$result["password"]);
         }
 
         return $user;

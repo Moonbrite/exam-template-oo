@@ -16,7 +16,7 @@ class SecurityController
 
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-            $user = $this->userManager->findByEmail();
+            $user = $this->userManager->findByUser();
 
             if ($user){
 
@@ -26,7 +26,7 @@ class SecurityController
 
                     $_SESSION["user"] = serialize($user);
 
-                    header("Location: index.php?controller=techno&action=list"); // TODO redirection apres la conection
+                    header("Location: index.php?controller=moto&action=list"); // TODO redirection apres la conection
                 }else {
                     $error =true;
                 }
@@ -34,7 +34,7 @@ class SecurityController
                 $error =true;
             }
         }if (array_key_exists("user",$_SESSION)){
-            header("Location: index.php?controller=techno&action=list"); // TODO redirection si te et deja conecter
+            header("Location: index.php?controller=moto&action=list"); // TODO redirection si te et deja conecter
         }
 
         require "View/Security/login.php"; // TODO Changer le require si besoins
@@ -52,35 +52,29 @@ class SecurityController
 
             if (count($errors)== 0){
 
-                $user = new User(null,$_POST["email"],password_hash($_POST["password"],PASSWORD_DEFAULT));
+                $user = new User(null,$_POST["username"],password_hash($_POST["password"],PASSWORD_DEFAULT));
 
                 $this->userManager->add($user);
 
-                header("Location: index.php?controller=security&action=login"); //TODO la création c'est bien passer redirection sur la page login
+                header("Location: index.php?controller=security&action=login");
             }
 
         }
         if (array_key_exists("user",$_SESSION)){
 
-            header("Location: index.php?controller=techno&action=list"); // TODO redirection si te et deja conecter
+            header("Location: index.php?controller=moto&action=list");
         }
-        require 'View/Security/register.php'; // TODO Changer le require si besoins
+        require 'View/Security/register.php';
     }
 
     private function isValidRegister(){
 
         $errors = [];
 
-        if(empty($_POST["email"])){
+        if(empty($_POST["username"])){
 
-            $errors["email"] = "Veuillez entrer un email";
+            $errors["username"] = "Veuillez entrer un User";
 
-        }elseif(!filter_var($_POST["email"],FILTER_VALIDATE_EMAIL)){
-
-            $errors["email"] = "Email et invalide";
-
-        }elseif (!is_null($this->userManager->findByEmail())){
-            // TODO jsp se qui faut mettre ici
         }
         if(empty($_POST["password"])){
 
@@ -106,7 +100,7 @@ class SecurityController
     {
         session_start();
         session_destroy();
-        header("Location: index.php?controller=security&action=login"); // TODO redirection apres la déconection
+        header("Location: index.php?controller=security&action=login");
     }
 
 }

@@ -1,48 +1,46 @@
 <?php
 require "loader.php";
-
+require "View/Style/style.php";
 if (empty($_GET)){
-    header("Location: index.php?controller=techno&action=list"); //TODO si rien dans url redirige vers la page accueil
+    header("Location: index.php?controller=moto&action=list"); //TODO si rien dans url redirige vers la page accueil
 }
 
-//TODO Modif Immmmportant !!!!!!!!!!!!
-//TODO juste modif le premier Get SI besoin
-if ($_GET["controller"] === "techno"){
 
-    $allExemple = new ExempleController();
+$exceptionController = new ExceptionController();
 
+if ($_GET["controller"] === "moto"){
+    $allMoto = new MotoController();
     if ($_GET["action"] === "list"){
-        $action = $allExemple->findAll();
+        $action = $allMoto->findAll();
+    } elseif ($_GET["action"] === "detail" && array_key_exists("id",$_GET)){
+        $allMoto->detail($_GET["id"]);
+    } elseif ($_GET["action"] === "delete" && array_key_exists("id",$_GET)){
+        $allMoto->delete($_GET["id"]);
+    } elseif ($_GET["action"] === "add"){
+        $allMoto->add();
+    } elseif($_GET["action"] === "modif" && array_key_exists("id",$_GET)){
+        $allMoto->edit($_GET["id"]);
+    }elseif ($_GET["action"] == "sort" && array_key_exists("type", $_GET)) {
+        $allMoto->sort($_GET["type"]);
     }
-
-    if ($_GET["action"] === "detail" && array_key_exists("id",$_GET)){
-        $allExemple->detail($_GET["id"]);
+    else{
+        $exceptionController->notFound();
     }
-
-    if ($_GET["action"] === "delete" && array_key_exists("id",$_GET)){
-        $allExemple->delete($_GET["id"]);
-    }
-    if ($_GET["action"] === "add"){
-        $allExemple->add();
-    }
-    if($_GET["action"] === "modif" && array_key_exists("id",$_GET)){
-        $allExemple->edit($_GET["id"]);
-    }
+}elseif ($_GET["controller"] != "moto" and $_GET["controller"] != "security"){
+    $exceptionController->notFound();
 }
 
-//TODO Modif Immmmportant !!!!!!!!!!!!
-//TODO juste modif le premier Get SI besoin
 
 if($_GET["controller"] == "security") {
     $security = new SecurityController();
 
     if ($_GET["action"] == "register") {
         $security->register();
-    }
-    if ($_GET["action"] == "login") {
+    } elseif ($_GET["action"] == "login") {
         $security->login();
-    }
-    if ($_GET["action"] == "logout") {
+    } elseif ($_GET["action"] == "logout") {
         $security->logout();
+    } else{
+        $exceptionController->notFound();
     }
 }

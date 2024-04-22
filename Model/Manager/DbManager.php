@@ -4,7 +4,7 @@ abstract class DbManager
 {
 
     private $host = "localhost";
-    private $dbName = ""; //TODO Changer le nom de la basse de donné
+    private $dbName = "exam_mvc";
     private $user = "root";
     private $password = "";
 

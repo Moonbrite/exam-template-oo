@@ -12,5 +12,6 @@ interface ExempleInterfaceManager
 
     public function editOne($objet);
 
+    public function getByType($type);
 
 }
